@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La puerta — ¿Qué hay en la nevera?</title>
+<meta name="description" content="Espacio 4: los estantes de la puerta, donde están la leche, el queso y la mantequilla.">
+<meta name="theme-color" content="#ad262b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='18' y='4' width='28' height='56' rx='5' fill='%23b3b8be'/><rect x='18' y='26' width='28' height='2' fill='%23474c53'/><rect x='24' y='12' width='3' height='9' rx='1.5' fill='%23474c53'/><rect x='24' y='34' width='3' height='11' rx='1.5' fill='%23474c53'/></svg>">
+</head>
+
+<body data-espacio="lacteos">
+
+<div class="velo" aria-hidden="true"></div>
+<a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
+
+<!-- =====================================================================
+     ESPACIO 4 — LA PUERTA
+     ===================================================================== -->
+<main class="escena" id="contenido">
+
+  <span class="escena__luz" aria-hidden="true"></span>
+  <span class="escena__pared escena__pared--izq" aria-hidden="true"></span>
+  <span class="escena__pared escena__pared--der" aria-hidden="true"></span>
+  <span class="escena__escarcha" aria-hidden="true"></span>
+
+  <header class="encabezado">
+    <p class="etiqueta aparece">Espacio 4 de 8</p>
+    <h1 class="titulo titulo--l encabezado__titulo aparece" data-retraso="1">La puerta</h1>
+    <p class="pensamiento aparece" data-retraso="2">“La puerta es donde uno guarda lo que usa todos los días.”</p>
+    <p class="texto aparece" data-retraso="2" style="margin-top:14px;color:var(--frio-60)">Los estantes de la puerta son los que más se abren y los que más rápido se vacían. Aquí está casi todo lo frío que se unta, se vierte o se derrite.</p>
+  </header>
+
+  <noscript>
+    <p class="aviso-sin-js">
+      Tienes JavaScript desactivado: puedes leer y recorrer todos los espacios,
+      pero no se podrán guardar los ingredientes en la canasta.
+    </p>
+  </noscript>
+
+  <section class="rejilla aparece" data-retraso="3" aria-label="Ingredientes de este espacio">
+
+        <article class="tarjeta" data-ingrediente="leche" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/leche.jpg"
+                 data-icono="leche"
+                 alt="Leche"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Leche</h3>
+            <p class="tarjeta__dato">Bolsa abierta ayer. Alcanza para un café y todavía sobra para una mezcla.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="tarjeta" data-ingrediente="queso" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/queso.jpg"
+                 data-icono="queso"
+                 alt="Queso campesino"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Queso campesino</h3>
+            <p class="tarjeta__dato">Medio bloque envuelto en su propio plástico. Se derrite rápido sobre cualquier cosa caliente.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="tarjeta" data-ingrediente="mantequilla" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/mantequilla.jpg"
+                 data-icono="mantequilla"
+                 alt="Mantequilla"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Mantequilla</h3>
+            <p class="tarjeta__dato">Dura del frío. Hay que sacarla un rato antes si uno quiere untarla sin romper el pan.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="tarjeta" data-ingrediente="yogur" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/yogur.jpg"
+                 data-icono="yogur"
+                 alt="Yogur natural"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Yogur natural</h3>
+            <p class="tarjeta__dato">Sin azúcar, por eso nadie se lo ha tomado. Con fruta encima cambia completamente.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+  </section>
+
+  <nav class="caminos aparece" data-retraso="4" aria-label="Caminos desde este espacio">
+    <p class="caminos__titulo">Seguir explorando</p>
+    <ul class="caminos__lista">
+      <li><a class="enlace-camino" href="interior.html" data-sonido="paso">Volver al interior</a></li>
+      <li><a class="enlace-camino" href="huevos.html" data-sonido="paso">Estante de los huevos</a></li>
+      <li><a class="enlace-camino" href="frutas.html" data-sonido="paso">El cajón de las frutas</a></li>
+      <li><a class="enlace-camino" href="cajon.html" data-sonido="paso">El cajón frío</a></li>
+      <li><a class="enlace-camino" href="congelador.html" data-sonido="abrir">El congelador</a></li>
+      <li><a class="enlace-camino" href="../index.html" data-sonido="cerrar">Cerrar la nevera</a></li>
+      <li><a class="enlace-camino enlace-camino--fuerte" href="desayuno.html" data-sonido="paso">Ir a preparar el desayuno</a></li>
+    </ul>
+  </nav>
+
+</main>
+
+<script src="../js/iconos.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

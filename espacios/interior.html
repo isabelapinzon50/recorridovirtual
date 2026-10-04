@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interior de la nevera — ¿Qué hay en la nevera?</title>
+<meta name="description" content="Espacio 2: el interior general de la nevera. Desde aquí se puede explorar cada compartimento.">
+<meta name="theme-color" content="#ad262b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='18' y='4' width='28' height='56' rx='5' fill='%23b3b8be'/><rect x='18' y='26' width='28' height='2' fill='%23474c53'/><rect x='24' y='12' width='3' height='9' rx='1.5' fill='%23474c53'/><rect x='24' y='34' width='3' height='11' rx='1.5' fill='%23474c53'/></svg>">
+</head>
+
+<body data-espacio="interior">
+
+<div class="velo" aria-hidden="true"></div>
+<a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
+
+<!-- =====================================================================
+     ESPACIO 2 — INTERIOR GENERAL DE LA NEVERA
+     Es el eje del recorrido: desde aquí se llega a todas las zonas
+     y a todas las zonas se puede volver.
+     ===================================================================== -->
+<main class="escena" id="contenido">
+
+  <span class="escena__luz" aria-hidden="true"></span>
+  <span class="escena__pared escena__pared--izq" aria-hidden="true"></span>
+  <span class="escena__pared escena__pared--der" aria-hidden="true"></span>
+  <span class="escena__escarcha" aria-hidden="true"></span>
+
+  <header class="encabezado">
+    <p class="etiqueta aparece">Espacio 2 de 8 · Adentro</p>
+    <h1 class="titulo titulo--l encabezado__titulo aparece" data-retraso="1">
+      Se prendió la luz
+    </h1>
+    <p class="pensamiento aparece" data-retraso="2">
+      “Bueno. Hay más cosas de las que pensaba. ¿Por dónde empiezo?”
+    </p>
+  </header>
+
+  <noscript>
+    <p class="aviso-sin-js">
+      Tienes JavaScript desactivado. Puedes recorrer todos los espacios con los
+      enlaces de abajo, pero no se podrá guardar la canasta de ingredientes
+      ni calcular el desayuno final.
+    </p>
+  </noscript>
+
+  <!-- ---------- El interior, con sus zonas clicables ---------- -->
+  <section class="nevera-interior aparece" data-retraso="3"
+           aria-label="Compartimentos de la nevera. Cada zona es un enlace.">
+
+    <svg class="interior-svg" viewBox="0 0 1000 680" role="img"
+         aria-label="Vista del interior de la nevera: a la izquierda la puerta del congelador, en el centro dos estantes de vidrio y dos cajones, y a la derecha los compartimentos de la puerta.">
+      <defs>
+        <linearGradient id="gFondo" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"   stop-color="#fbfeff"/>
+          <stop offset=".45" stop-color="#dcedf4"/>
+          <stop offset="1"   stop-color="#a8c6d3"/>
+        </linearGradient>
+        <linearGradient id="gParedIzq" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#7fa3b2"/>
+          <stop offset="1" stop-color="#cde2ea"/>
+        </linearGradient>
+        <linearGradient id="gParedDer" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0" stop-color="#7fa3b2"/>
+          <stop offset="1" stop-color="#cde2ea"/>
+        </linearGradient>
+        <linearGradient id="gTecho" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset="1" stop-color="#dcecf2"/>
+        </linearGradient>
+        <linearGradient id="gVidrio" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".92"/>
+          <stop offset="1" stop-color="#b6d6e3" stop-opacity=".55"/>
+        </linearGradient>
+        <linearGradient id="gCajon" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".72"/>
+          <stop offset="1" stop-color="#9cc0cf" stop-opacity=".62"/>
+        </linearGradient>
+        <linearGradient id="gCongelador" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"  stop-color="#9fc3d2"/>
+          <stop offset=".6" stop-color="#d9ecf3"/>
+          <stop offset="1"  stop-color="#87aabb"/>
+        </linearGradient>
+        <linearGradient id="gLuz" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="gHalo" cx=".5" cy="0" r=".9">
+          <stop offset="0"   stop-color="#ffffff" stop-opacity=".9"/>
+          <stop offset=".55" stop-color="#ffffff" stop-opacity=".18"/>
+          <stop offset="1"   stop-color="#ffffff" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="cCajonIzq"><rect x="146" y="474" width="300" height="176" rx="12"/></clipPath>
+        <clipPath id="cCajonDer"><rect x="462" y="474" width="306" height="176" rx="12"/></clipPath>
+      </defs>
+
+      <!-- ============ CUERPO DE LA NEVERA ============ -->
+      <rect x="0" y="0" width="1000" height="680" fill="url(#gFondo)"/>
+
+      <!-- Paredes en perspectiva -->
+      <polygon points="118,0 192,46 192,636 118,680" fill="url(#gParedIzq)" opacity=".75"/>
+      <polygon points="790,0 716,46 716,636 790,680" fill="url(#gParedDer)" opacity=".55"/>
+      <polygon points="118,0 790,0 716,46 192,46" fill="url(#gTecho)"/>
+      <rect x="192" y="46" width="524" height="590" fill="#e7f3f8"/>
+      <rect x="192" y="46" width="524" height="590" fill="url(#gHalo)"/>
+
+      <!-- Rejilla sutil del panel del fondo -->
+      <g stroke="#b9d4de" stroke-width="1.4" opacity=".5">
+        <line x1="290" y1="46" x2="290" y2="636"/>
+        <line x1="400" y1="46" x2="400" y2="636"/>
+        <line x1="510" y1="46" x2="510" y2="636"/>
+        <line x1="620" y1="46" x2="620" y2="636"/>
+      </g>
+
+      <!-- Luz LED del techo -->
+      <rect x="300" y="18" width="320" height="12" rx="6" fill="#ffffff"/>
+      <ellipse cx="460" cy="40" rx="300" ry="78" fill="url(#gLuz)" opacity=".85"/>
+
+      <!-- ============ ESTANTE A (arriba) : HUEVOS ============ -->
+      <!-- Bandeja de huevos -->
+      <g>
+        <rect x="196" y="176" width="178" height="56" rx="9" fill="#c3d5de" stroke="#8fb0bf" stroke-width="2"/>
+        <g fill="#f4fafc" stroke="#9fbccb" stroke-width="1.6">
+          <ellipse cx="226" cy="176" rx="22" ry="17"/>
+          <ellipse cx="272" cy="174" rx="22" ry="17"/>
+          <ellipse cx="318" cy="176" rx="22" ry="17"/>
+          <ellipse cx="358" cy="178" rx="20" ry="16"/>
+        </g>
+        <rect x="196" y="206" width="178" height="26" rx="7" fill="#aec4ce" opacity=".75"/>
+      </g>
+      <!-- Frasco de mermelada -->
+      <g>
+        <rect x="404" y="162" width="56" height="70" rx="10" fill="#9fb9c6" opacity=".9"/>
+        <rect x="404" y="188" width="56" height="44" rx="8" fill="#7f5a62" opacity=".75"/>
+        <rect x="400" y="152" width="64" height="16" rx="5" fill="#6f8c99"/>
+      </g>
+      <!-- Botella de ají -->
+      <g>
+        <path d="M486 232v-52c0-7 4-9 4-15v-10h18v10c0 6 4 8 4 15v52z" fill="#c2545a" opacity=".85"/>
+        <rect x="488" y="150" width="22" height="9" rx="3" fill="#6f8c99"/>
+      </g>
+      <!-- Estante de vidrio A -->
+      <polygon points="196,232 712,232 740,250 168,250" fill="url(#gVidrio)"/>
+      <rect x="168" y="248" width="572" height="9" rx="4" fill="#ffffff" opacity=".95"/>
+      <rect x="168" y="257" width="572" height="7" rx="3" fill="#7fa6b7" opacity=".3"/>
+
+      <!-- ============ ESTANTE B (medio) : SOBRAS ============ -->
+      <!-- Plato tapado -->
+      <g>
+        <path d="M470 372a74 40 0 0 1 148 0z" fill="#d3e4ec" stroke="#9cbccb" stroke-width="2"/>
+        <rect x="462" y="370" width="164" height="12" rx="6" fill="#eaf4f8" stroke="#9cbccb" stroke-width="1.6"/>
+        <circle cx="544" cy="330" r="7" fill="#9cbccb"/>
+      </g>
+      <!-- Recipientes apilados -->
+      <g>
+        <rect x="236" y="322" width="118" height="26" rx="6" fill="#bcd3dd" stroke="#8fb0bf" stroke-width="1.6"/>
+        <rect x="230" y="346" width="130" height="26" rx="6" fill="#cadee6" stroke="#8fb0bf" stroke-width="1.6"/>
+        <rect x="248" y="310" width="94" height="14" rx="5" fill="#9fbdca"/>
+      </g>
+      <!-- Olla -->
+      <g>
+        <rect x="380" y="330" width="66" height="42" rx="8" fill="#aac3cf" stroke="#86a7b6" stroke-width="2"/>
+        <rect x="372" y="322" width="82" height="11" rx="5" fill="#8fb0bf"/>
+        <circle cx="413" cy="318" r="6" fill="#8fb0bf"/>
+      </g>
+      <!-- Estante de vidrio B -->
+      <polygon points="196,372 712,372 740,390 168,390" fill="url(#gVidrio)"/>
+      <rect x="168" y="388" width="572" height="9" rx="4" fill="#ffffff" opacity=".95"/>
+      <rect x="168" y="397" width="572" height="7" rx="3" fill="#7fa6b7" opacity=".3"/>
+
+      <!-- Tercer nivel: espacio vacío con una jarra -->
+      <g>
+        <path d="M300 460v-52h44v52z" fill="#bdd6e0" opacity=".9"/>
+        <path d="M344 420h14a10 10 0 0 1 0 20h-14" fill="none" stroke="#8fb0bf" stroke-width="5"/>
+        <rect x="296" y="400" width="52" height="10" rx="4" fill="#8fb0bf"/>
+      </g>
+      <polygon points="196,462 712,462 740,472 168,472" fill="url(#gVidrio)" opacity=".8"/>
+
+      <!-- ============ CAJONES ============ -->
+      <!-- Contenido del cajón izquierdo (frutas) -->
+      <g clip-path="url(#cCajonIzq)">
+        <rect x="146" y="474" width="300" height="176" fill="#dcedf3"/>
+        <circle cx="212" cy="578" r="40" fill="#d99a4e" opacity=".75"/>
+        <circle cx="286" cy="592" r="34" fill="#c8543f" opacity=".7"/>
+        <ellipse cx="358" cy="576" rx="46" ry="26" fill="#cfd36a" opacity=".7"/>
+        <circle cx="248" cy="612" r="26" fill="#8fae5a" opacity=".65"/>
+      </g>
+      <!-- Contenido del cajón derecho (cajón frío) -->
+      <g clip-path="url(#cCajonDer)">
+        <rect x="462" y="474" width="306" height="176" fill="#dcedf3"/>
+        <rect x="492" y="542" width="118" height="80" rx="9" fill="#b58c7a" opacity=".65"/>
+        <rect x="624" y="556" width="112" height="66" rx="9" fill="#c9a77f" opacity=".6"/>
+        <rect x="520" y="516" width="150" height="34" rx="14" fill="#d8c2a2" opacity=".6"/>
+      </g>
+      <!-- Frentes translúcidos -->
+      <rect x="146" y="474" width="300" height="176" rx="12" fill="url(#gCajon)" stroke="#ffffff" stroke-width="3"/>
+      <rect x="462" y="474" width="306" height="176" rx="12" fill="url(#gCajon)" stroke="#ffffff" stroke-width="3"/>
+      <rect x="236" y="500" width="120" height="10" rx="5" fill="#ffffff" opacity=".9"/>
+      <rect x="555" y="500" width="120" height="10" rx="5" fill="#ffffff" opacity=".9"/>
+
+      <!-- ============ PUERTA IZQUIERDA : CONGELADOR ============ -->
+      <rect x="0" y="0" width="112" height="680" fill="url(#gCongelador)"/>
+      <rect x="100" y="0" width="12" height="680" fill="#5c8597" opacity=".5"/>
+      <g fill="#ffffff" opacity=".85">
+        <circle cx="34" cy="92"  r="3"/><circle cx="62" cy="150" r="2.4"/>
+        <circle cx="26" cy="236" r="2.6"/><circle cx="70" cy="300" r="3.2"/>
+        <circle cx="40" cy="392" r="2.2"/><circle cx="58" cy="470" r="3"/>
+        <circle cx="30" cy="556" r="2.6"/><circle cx="66" cy="620" r="2.4"/>
+      </g>
+      <g stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".9">
+        <path d="M50 310v70M24 328l52 34M76 328l-52 34"/>
+      </g>
+
+      <!-- ============ PUERTA DERECHA : LÁCTEOS ============ -->
+      <rect x="802" y="0" width="198" height="680" fill="#e3f1f6"/>
+      <rect x="802" y="0" width="12" height="680" fill="#5c8597" opacity=".35"/>
+      <!-- Bandeja 1: leche -->
+      <rect x="828" y="76" width="152" height="124" rx="10" fill="url(#gCajon)" stroke="#ffffff" stroke-width="3"/>
+      <path d="M866 182v-70l14-20h26l14 20v70z" fill="#cfe0e8" stroke="#95b7c6" stroke-width="2"/>
+      <!-- Bandeja 2: queso y mantequilla -->
+      <rect x="828" y="226" width="152" height="150" rx="10" fill="url(#gCajon)" stroke="#ffffff" stroke-width="3"/>
+      <polygon points="846,352 906,318 936,336 936,352" fill="#e0cf8f" stroke="#a9a06a" stroke-width="2"/>
+      <rect x="846" y="266" width="86" height="34" rx="5" fill="#f0e7cd" stroke="#a9a06a" stroke-width="2"/>
+      <!-- Bandeja 3: yogures -->
+      <rect x="828" y="402" width="152" height="158" rx="10" fill="url(#gCajon)" stroke="#ffffff" stroke-width="3"/>
+      <g fill="#dfeaf0" stroke="#95b7c6" stroke-width="2">
+        <path d="M848 540l-6-62h44l-6 62z"/>
+        <path d="M900 540l-6-62h44l-6 62z"/>
+      </g>
+      <rect x="836" y="470" width="60" height="10" rx="4" fill="#9fc0cf"/>
+      <rect x="888" y="470" width="60" height="10" rx="4" fill="#9fc0cf"/>
+
+      <!-- Sombra inferior -->
+      <rect x="0" y="648" width="1000" height="32" fill="#6c93a4" opacity=".22"/>
+    </svg>
+
+    <!-- HOTSPOT 1 → huevos -->
+    <a class="hotspot hs--huevos" href="huevos.html" data-destino="huevos" data-sonido="paso">
+      <span class="hotspot__area"></span>
+      <span class="hotspot__punto"></span>
+      <span class="hotspot__nombre">Estante de arriba · hay huevos</span>
+    </a>
+
+    <!-- HOTSPOT 2 → lácteos (los estantes de la puerta) -->
+    <a class="hotspot hs--lacteos" href="lacteos.html" data-destino="lacteos" data-sonido="paso">
+      <span class="hotspot__area"></span>
+      <span class="hotspot__punto"></span>
+      <span class="hotspot__nombre">Los estantes de la puerta</span>
+    </a>
+
+    <!-- HOTSPOT 3 → congelador (atajo a la otra puerta) -->
+    <a class="hotspot hs--congelador" href="congelador.html" data-destino="congelador" data-sonido="abrir">
+      <span class="hotspot__area"></span>
+      <span class="hotspot__punto"></span>
+      <span class="hotspot__nombre">La otra puerta: el congelador</span>
+    </a>
+
+    <!-- HOTSPOT 4 → frutas -->
+    <a class="hotspot hs--frutas" href="frutas.html" data-destino="frutas" data-sonido="paso">
+      <span class="hotspot__area"></span>
+      <span class="hotspot__punto"></span>
+      <span class="hotspot__nombre">Cajón de la izquierda</span>
+    </a>
+
+    <!-- HOTSPOT 5 → cajón frío -->
+    <a class="hotspot hs--cajon" href="cajon.html" data-destino="cajon" data-sonido="paso">
+      <span class="hotspot__area"></span>
+      <span class="hotspot__punto"></span>
+      <span class="hotspot__nombre">Cajón de la derecha</span>
+    </a>
+
+    <!-- HOTSPOT 6 → sobras (pista narrativa, no tiene ingredientes) -->
+    <a class="hotspot hs--sobras" href="cajon.html" data-sonido="paso">
+      <span class="hotspot__area"></span>
+      <span class="hotspot__punto"></span>
+      <span class="hotspot__nombre">Las sobras de anoche… mejor no</span>
+    </a>
+
+  </section>
+
+  <p class="texto aparece" data-retraso="4"
+     style="text-align:center;max-width:52ch;margin:26px auto 0;color:var(--frio-60)">
+    Los puntos rojos son zonas que puedes tocar. Los que ya visitaste se quedan marcados.
+    No tienes que recorrerlas en orden: entra, mira, devuélvete y sigue por otro lado.
+  </p>
+
+  <!-- ---------- Navegación: todos los caminos desde aquí ---------- -->
+  <nav class="caminos aparece" data-retraso="4" aria-label="Caminos desde el interior">
+    <p class="caminos__titulo">¿Hacia dónde?</p>
+    <ul class="caminos__lista">
+      <li><a class="enlace-camino" href="huevos.html" data-sonido="paso">Estante de los huevos</a></li>
+      <li><a class="enlace-camino" href="lacteos.html" data-sonido="paso">La puerta: lácteos</a></li>
+      <li><a class="enlace-camino" href="frutas.html" data-sonido="paso">El cajón de las frutas</a></li>
+      <li><a class="enlace-camino" href="cajon.html" data-sonido="paso">El cajón frío</a></li>
+      <li><a class="enlace-camino" href="congelador.html" data-sonido="abrir">El congelador</a></li>
+      <li><a class="enlace-camino" href="../index.html" data-sonido="cerrar">Cerrar la nevera</a></li>
+      <li><a class="enlace-camino enlace-camino--fuerte" href="desayuno.html" data-sonido="paso">Ir a preparar el desayuno</a></li>
+    </ul>
+  </nav>
+
+</main>
+
+<script src="../js/iconos.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

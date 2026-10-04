@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La mesa — ¿Qué hay en la nevera?</title>
+<meta name="description" content="Espacio 8: el final del recorrido. Lo que encontraste en la nevera y el desayuno que puedes preparar con eso.">
+<meta name="theme-color" content="#ad262b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='18' y='4' width='28' height='56' rx='5' fill='%23b3b8be'/><rect x='18' y='26' width='28' height='2' fill='%23474c53'/><rect x='24' y='12' width='3' height='9' rx='1.5' fill='%23474c53'/><rect x='24' y='34' width='3' height='11' rx='1.5' fill='%23474c53'/></svg>">
+</head>
+
+<body data-espacio="desayuno">
+
+<div class="velo" aria-hidden="true"></div>
+<a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
+
+<!-- =====================================================================
+     ESPACIO 8 — LA MESA
+     Último espacio. Cambia según lo que la persona haya recogido:
+     el resultado lo arma js/script.js dentro de #resultadoDesayuno.
+     ===================================================================== -->
+<main class="mesa" id="contenido">
+
+  <header class="encabezado" style="margin-bottom:34px">
+    <p class="etiqueta aparece" style="color:var(--rojo)">Espacio 8 de 8 · Fin del recorrido</p>
+    <h1 class="titulo titulo--l aparece" data-retraso="1"
+        style="margin:8px 0 14px;color:#3c3026">Cerré la nevera</h1>
+    <p class="pensamiento aparece" data-retraso="2" style="color:#6b5a48">
+      “Ya está. Vamos a ver qué sale de esto.”
+    </p>
+  </header>
+
+  <noscript>
+    <p class="aviso-sin-js" style="margin-left:auto;margin-right:auto">
+      Esta pantalla necesita JavaScript para mostrar lo que recogiste y calcular el
+      desayuno. Actívalo y vuelve a hacer el recorrido, o usa los enlaces de abajo
+      para seguir explorando los espacios.
+    </p>
+  </noscript>
+
+  <!-- Aquí se inyecta el resultado: plato, pasos, canasta y alternativas -->
+  <div id="resultadoDesayuno" class="aparece" data-retraso="3"></div>
+
+  <nav class="caminos aparece" data-retraso="4" aria-label="Volver al recorrido">
+    <p class="caminos__titulo">¿Se te quedó algo? Siempre puedes devolverte</p>
+    <ul class="caminos__lista">
+      <li><a class="enlace-camino enlace-camino--fuerte" href="interior.html" data-sonido="abrir">Volver a abrir la nevera</a></li>
+      <li><a class="enlace-camino" href="huevos.html" data-sonido="paso">Estante de los huevos</a></li>
+      <li><a class="enlace-camino" href="lacteos.html" data-sonido="paso">La puerta: lácteos</a></li>
+      <li><a class="enlace-camino" href="frutas.html" data-sonido="paso">El cajón de las frutas</a></li>
+      <li><a class="enlace-camino" href="cajon.html" data-sonido="paso">El cajón frío</a></li>
+      <li><a class="enlace-camino" href="congelador.html" data-sonido="abrir">El congelador</a></li>
+      <li><a class="enlace-camino" href="../index.html" data-sonido="cerrar">Empezar de nuevo</a></li>
+    </ul>
+  </nav>
+
+  <p class="texto texto--pequeno" style="text-align:center;margin:34px auto 0;max-width:46ch;color:#7a6450">
+    Recorrido virtual · Taller Multimedia 1 · Entrega 3<br>
+    Documentación del proceso en el
+    <a href="../README.md" style="color:var(--rojo)">README del repositorio</a>.
+  </p>
+
+</main>
+
+<script src="../js/iconos.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El estante de arriba — ¿Qué hay en la nevera?</title>
+<meta name="description" content="Espacio 3: el estante de arriba de la nevera, donde están los huevos.">
+<meta name="theme-color" content="#ad262b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='18' y='4' width='28' height='56' rx='5' fill='%23b3b8be'/><rect x='18' y='26' width='28' height='2' fill='%23474c53'/><rect x='24' y='12' width='3' height='9' rx='1.5' fill='%23474c53'/><rect x='24' y='34' width='3' height='11' rx='1.5' fill='%23474c53'/></svg>">
+</head>
+
+<body data-espacio="huevos">
+
+<div class="velo" aria-hidden="true"></div>
+<a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
+
+<!-- =====================================================================
+     ESPACIO 3 — EL ESTANTE DE ARRIBA
+     ===================================================================== -->
+<main class="escena" id="contenido">
+
+  <span class="escena__luz" aria-hidden="true"></span>
+  <span class="escena__pared escena__pared--izq" aria-hidden="true"></span>
+  <span class="escena__pared escena__pared--der" aria-hidden="true"></span>
+  <span class="escena__escarcha" aria-hidden="true"></span>
+
+  <header class="encabezado">
+    <p class="etiqueta aparece">Espacio 3 de 8</p>
+    <h1 class="titulo titulo--l encabezado__titulo aparece" data-retraso="1">El estante de arriba</h1>
+    <p class="pensamiento aparece" data-retraso="2">“Aquí arriba siempre queda algo olvidado.”</p>
+    <p class="texto aparece" data-retraso="2" style="margin-top:14px;color:var(--frio-60)">El estante de arriba es el más alto y el más desordenado. Hay una bandeja de huevos a medio usar, un frasco de mermelada que alguien no cerró bien y el ají que mi mamá manda cada tanto.</p>
+  </header>
+
+  <noscript>
+    <p class="aviso-sin-js">
+      Tienes JavaScript desactivado: puedes leer y recorrer todos los espacios,
+      pero no se podrán guardar los ingredientes en la canasta.
+    </p>
+  </noscript>
+
+  <section class="rejilla aparece" data-retraso="3" aria-label="Ingredientes de este espacio">
+
+        <article class="tarjeta" data-ingrediente="huevos" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/huevos.jpg"
+                 data-icono="huevos"
+                 alt="Huevos"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Huevos</h3>
+            <p class="tarjeta__dato">Quedan ocho. Es el ingrediente que más caminos abre: con huevos se puede hacer casi cualquier desayuno.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="tarjeta" data-ingrediente="mermelada" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/mermelada.jpg"
+                 data-icono="mermelada"
+                 alt="Mermelada de mora"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Mermelada de mora</h3>
+            <p class="tarjeta__dato">Casera, de las que vienen sin etiqueta. Sirve si el desayuno termina siendo pan o tostadas.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="tarjeta" data-ingrediente="aji" data-tomado="no">
+          <div class="tarjeta__medio">
+            <img class="tarjeta__foto"
+                 src="../img/ingredientes/aji.jpg"
+                 data-icono="aji"
+                 alt="Ají casero"
+                 loading="lazy" width="400" height="300">
+          </div>
+          <div class="tarjeta__cuerpo">
+            <h3 class="tarjeta__nombre">Ají casero</h3>
+            <p class="tarjeta__dato">No alimenta, pero cambia el plato entero. Media cucharadita es suficiente.</p>
+            <button class="tarjeta__tomar" type="button" aria-pressed="false">
+              <span class="mas">+</span><span class="texto-tomar">Llevar</span>
+            </button>
+          </div>
+        </article>
+
+  </section>
+
+  <nav class="caminos aparece" data-retraso="4" aria-label="Caminos desde este espacio">
+    <p class="caminos__titulo">Seguir explorando</p>
+    <ul class="caminos__lista">
+      <li><a class="enlace-camino" href="interior.html" data-sonido="paso">Volver al interior</a></li>
+      <li><a class="enlace-camino" href="lacteos.html" data-sonido="paso">La puerta: lácteos</a></li>
+      <li><a class="enlace-camino" href="frutas.html" data-sonido="paso">El cajón de las frutas</a></li>
+      <li><a class="enlace-camino" href="cajon.html" data-sonido="paso">El cajón frío</a></li>
+      <li><a class="enlace-camino" href="congelador.html" data-sonido="abrir">El congelador</a></li>
+      <li><a class="enlace-camino" href="../index.html" data-sonido="cerrar">Cerrar la nevera</a></li>
+      <li><a class="enlace-camino enlace-camino--fuerte" href="desayuno.html" data-sonido="paso">Ir a preparar el desayuno</a></li>
+    </ul>
+  </nav>
+
+</main>
+
+<script src="../js/iconos.js"></script>
+<script src="../js/audio.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>

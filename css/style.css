@@ -1,0 +1,1308 @@
+/* =========================================================================
+   RECORRIDO VIRTUAL — "¿Qué hay en la nevera?"
+   Taller Multimedia 1 · Entrega 3
+   -------------------------------------------------------------------------
+   Hoja de estilos única. Organizada en bloques:
+     00. Variables y reset
+     01. Tipografía y utilidades
+     02. Transición entre páginas
+     03. HUD superior (barra fija)
+     04. Panel de inventario
+     05. Avisos flotantes (toasts)
+     06. Escena: cocina + nevera cerrada (index)
+     07. Escena: interior de la nevera
+     08. Hotspots
+     09. Tarjetas de ingrediente
+     10. Navegación inferior
+     11. Pantalla de la mesa (desayuno)
+     12. Responsive
+     13. Accesibilidad / movimiento reducido
+   ========================================================================= */
+
+/* ========================= 00. VARIABLES Y RESET ======================== */
+
+:root {
+  /* Acero cepillado — tomado de la foto de la nevera */
+  --acero-00: #f1f3f4;
+  --acero-10: #d6d9dd;
+  --acero-20: #b3b8be;
+  --acero-30: #8d939b;
+  --acero-40: #6a7078;
+  --acero-50: #474c53;
+  --acero-60: #2b2f35;
+
+  /* Rojo del mueble superior de la cocina */
+  --rojo: #ad262b;
+  --rojo-vivo: #d8403c;
+  --rojo-oscuro: #7d1a1f;
+
+  /* Luz fría del interior de la nevera */
+  --frio-00: #ffffff;
+  --frio-10: #eaf5f9;
+  --frio-20: #cfe6ef;
+  --frio-30: #a6cddb;
+  --frio-40: #6fa6ba;
+  --frio-50: #3d6f84;
+  --frio-60: #1d3d4c;
+
+  /* Cocina */
+  --pared: #ece7e2;
+  --pared-sombra: #d6cfc8;
+  --piso: #e4e2de;
+
+  --tinta: #14212a;
+  --tinta-suave: #44616f;
+
+  --radio-s: 6px;
+  --radio-m: 14px;
+  --radio-l: 24px;
+
+  --sombra-baja: 0 2px 10px rgba(20, 45, 60, .12);
+  --sombra-media: 0 12px 34px rgba(20, 45, 60, .20);
+  --sombra-alta: 0 28px 70px rgba(12, 30, 42, .32);
+
+  --ui: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --display: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  --borde-vidrio: 1px solid rgba(255, 255, 255, .55);
+  --vidrio: rgba(255, 255, 255, .42);
+
+  --t-rapida: 180ms cubic-bezier(.22, .61, .36, 1);
+  --t-media: 420ms cubic-bezier(.22, .61, .36, 1);
+  --t-lenta: 900ms cubic-bezier(.65, .02, .25, 1);
+
+  --hud-alto: 60px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ui);
+  color: var(--tinta);
+  background: var(--frio-60);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--rojo-vivo);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ===================== 01. TIPOGRAFÍA Y UTILIDADES ===================== */
+
+.titulo {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: -.01em;
+  margin: 0;
+}
+
+.titulo--xl  { font-size: clamp(2.6rem, 8vw, 5.6rem); }
+.titulo--l   { font-size: clamp(2rem, 5.6vw, 3.6rem); }
+.titulo--m   { font-size: clamp(1.5rem, 3.6vw, 2.3rem); }
+
+.pensamiento {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+  line-height: 1.35;
+  color: var(--tinta-suave);
+  margin: 0;
+}
+
+.etiqueta {
+  font-size: .68rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: .62;
+  margin: 0;
+}
+
+.texto { font-size: 1rem; line-height: 1.55; margin: 0; }
+.texto--pequeno { font-size: .86rem; line-height: 1.5; }
+
+.solo-lectores {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.saltar-al-contenido {
+  position: fixed;
+  top: -200px; left: 12px;
+  z-index: 999;
+  background: var(--rojo);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--radio-s);
+  transition: top var(--t-rapida);
+}
+.saltar-al-contenido:focus { top: 12px; }
+
+/* ===================== 02. TRANSICIÓN ENTRE PÁGINAS ==================== */
+
+.velo {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, var(--frio-00) 0%, var(--frio-20) 45%, var(--frio-50) 100%);
+  opacity: 1;
+  transition: opacity 520ms ease;
+}
+body.cargado .velo { opacity: 0; }
+body.saliendo .velo { opacity: 1; pointer-events: all; transition: opacity 320ms ease; }
+
+/* Entrada escalonada de los bloques de contenido */
+.aparece {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 620ms ease, transform 620ms cubic-bezier(.22, .61, .36, 1);
+}
+body.cargado .aparece { opacity: 1; transform: none; }
+body.cargado .aparece[data-retraso="1"] { transition-delay: 120ms; }
+body.cargado .aparece[data-retraso="2"] { transition-delay: 240ms; }
+body.cargado .aparece[data-retraso="3"] { transition-delay: 360ms; }
+body.cargado .aparece[data-retraso="4"] { transition-delay: 480ms; }
+
+/* ====================== 03. HUD SUPERIOR (BARRA FIJA) ================== */
+
+.hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--hud-alto);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 clamp(10px, 2.5vw, 22px);
+  background: rgba(12, 32, 42, .58);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+  color: #eef7fa;
+}
+
+.hud__volver,
+.hud__boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: .82rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: rgba(255, 255, 255, .09);
+  border: 1px solid rgba(255, 255, 255, .16);
+  transition: background var(--t-rapida), transform var(--t-rapida), border-color var(--t-rapida);
+  white-space: nowrap;
+}
+.hud__volver:hover,
+.hud__boton:hover {
+  background: rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, .35);
+  transform: translateY(-1px);
+}
+
+.hud__volver svg,
+.hud__boton svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.hud__ruta {
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .72;
+  margin-left: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud__derecha {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud__contador {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--rojo-vivo);
+  color: #fff;
+  font-size: .74rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.hud__contador[data-vacio="si"] { background: rgba(255, 255, 255, .18); color: rgba(255,255,255,.8); }
+
+.hud__sonido .onda { transition: opacity var(--t-rapida); }
+body.sin-sonido .hud__sonido .onda { opacity: .18; }
+body.sin-sonido .hud__sonido .tachado { opacity: 1; }
+.hud__sonido .tachado { opacity: 0; transition: opacity var(--t-rapida); }
+
+/* ======================= 04. PANEL DE INVENTARIO ======================= */
+
+.inventario {
+  position: fixed;
+  top: 0; right: 0;
+  z-index: 350;
+  width: min(380px, 92vw);
+  height: 100dvh;
+  padding: calc(var(--hud-alto) + 18px) 22px 24px;
+  background: linear-gradient(180deg, #f7fcfd 0%, #e3eff4 100%);
+  box-shadow: var(--sombra-alta);
+  transform: translateX(104%);
+  transition: transform var(--t-media);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+body.inventario-abierto .inventario { transform: none; }
+
+.inventario__cerrar {
+  position: absolute;
+  top: calc(var(--hud-alto) + 14px);
+  right: 18px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 60, 78, .08);
+}
+.inventario__cerrar:hover { background: rgba(20, 60, 78, .18); }
+
+.inventario__lista {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inventario__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: var(--radio-m);
+  background: #fff;
+  border: 1px solid rgba(60, 110, 130, .14);
+  box-shadow: var(--sombra-baja);
+}
+.inventario__item svg { width: 30px; height: 30px; flex: 0 0 auto; color: var(--frio-50); }
+.inventario__item b { font-weight: 500; font-size: .92rem; }
+.inventario__item small { display: block; font-size: .72rem; opacity: .6; }
+.inventario__quitar {
+  margin-left: auto;
+  font-size: .72rem;
+  color: var(--rojo);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.inventario__vacio {
+  padding: 18px;
+  border-radius: var(--radio-m);
+  border: 1px dashed rgba(60, 110, 130, .35);
+  color: var(--tinta-suave);
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+/* ===================== 05. AVISOS FLOTANTES (TOASTS) =================== */
+
+.avisos {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 380;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  pointer-events: none;
+  width: min(520px, 92vw);
+}
+
+.aviso {
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(14, 36, 46, .92);
+  color: #eaf6fa;
+  font-size: .86rem;
+  box-shadow: var(--sombra-media);
+  backdrop-filter: blur(8px);
+  animation: aviso-entra 320ms cubic-bezier(.22,.61,.36,1);
+  text-align: center;
+}
+.aviso--rojo { background: var(--rojo); }
+.aviso.saliendo { animation: aviso-sale 300ms forwards; }
+
+@keyframes aviso-entra {
+  from { opacity: 0; transform: translateY(14px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes aviso-sale {
+  to { opacity: 0; transform: translateY(10px) scale(.97); }
+}
+
+/* ============= 06. ESCENA: COCINA + NEVERA CERRADA (index) ============= */
+
+.cocina {
+  position: relative;
+  min-height: 100dvh;
+  padding: calc(var(--hud-alto) + 10px) 0 0;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 60% at 18% 8%, rgba(255, 252, 245, .95) 0%, rgba(236, 231, 226, 0) 60%),
+    linear-gradient(170deg, var(--pared) 0%, var(--pared) 62%, var(--pared-sombra) 100%);
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  align-items: center;
+  gap: clamp(10px, 3vw, 50px);
+}
+
+/* Mueble rojo superior (está en la foto, justo encima de la nevera) */
+.mueble-rojo {
+  width: 112%;
+  margin-left: 4%;
+  height: clamp(42px, 6.5vh, 84px);
+  background: linear-gradient(177deg, var(--rojo-vivo) 0%, var(--rojo) 42%, var(--rojo-oscuro) 100%);
+  box-shadow: 0 14px 30px rgba(90, 15, 20, .3), inset 0 -3px 0 rgba(0, 0, 0, .22);
+  border-radius: 3px 3px 2px 2px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.mueble-rojo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(100deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,.14) 54%, rgba(255,255,255,0) 70%);
+}
+
+/* Piso de baldosa claro */
+.cocina__piso {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 12%;
+  opacity: .9;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,0) 22%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.028) 0 1px, rgba(0,0,0,0) 1px 86px),
+    linear-gradient(180deg, #ded9d3 0%, var(--piso) 100%);
+}
+
+/* --- Texto introductorio --- */
+.intro {
+  position: relative;
+  z-index: 3;
+  padding: clamp(16px, 3vw, 40px);
+  padding-left: clamp(20px, 5vw, 76px);
+  max-width: 44ch;
+}
+.intro .etiqueta { color: var(--rojo); opacity: 1; }
+.intro__titulo { margin: 10px 0 16px; color: var(--tinta); }
+.intro__parrafos { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+
+.boton-principal {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 26px;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: var(--sombra-media);
+  transition: transform var(--t-rapida), box-shadow var(--t-rapida), background var(--t-rapida);
+}
+.boton-principal:hover {
+  transform: translateY(-2px);
+  background: var(--rojo);
+  box-shadow: 0 16px 36px rgba(173, 38, 43, .36);
+}
+.boton-principal .flecha { transition: transform var(--t-rapida); }
+.boton-principal:hover .flecha { transform: translateX(5px); }
+
+.pista {
+  margin-top: 18px;
+  font-size: .78rem;
+  color: var(--tinta-suave);
+  line-height: 1.6;
+}
+.pista a { color: var(--rojo); text-underline-offset: 3px; }
+
+/* --- La nevera dibujada con CSS (réplica de la foto) --- */
+.nevera-marco {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 3vh, 40px) 0 clamp(22px, 4vh, 54px);
+  perspective: 1600px;
+}
+
+.nevera-conjunto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* El ancho sale del alto disponible, para que la nevera nunca se corte.
+     0.543 es la proporción exacta de la foto recortada (310 / 571). */
+  width: min(420px, 82%, calc((100dvh - 300px) * 0.543));
+  transform-style: preserve-3d;
+}
+
+.nevera {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(6px, 1vh, 14px);
+  aspect-ratio: 310 / 571;   /* proporción exacta del recorte de img/nevera-cerrada.jpg */
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 34px 44px rgba(40, 30, 25, .34));
+}
+
+/* Hueco oscuro que se ve cuando las puertas se abren */
+.nevera__hueco {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px 10px 6px 6px;
+  background:
+    radial-gradient(90% 70% at 50% 25%, #ffffff 0%, #dff0f6 32%, #9dc0cd 66%, #3f6475 100%);
+  box-shadow: inset 0 0 70px rgba(10, 40, 55, .55);
+  opacity: 0;
+  transition: opacity 500ms ease 240ms;
+}
+body.abriendo .nevera__hueco { opacity: 1; }
+
+/* Cuerpo / puertas en acero cepillado */
+.acero {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.085) 0 1px, rgba(0,0,0,.038) 1px 3px),
+    linear-gradient(97deg,
+      #878d95 0%, #c9cdd1 11%, #9ba1a8 23%, #bcc1c6 36%,
+      #878d95 50%, #b4b9bf 64%, #8f959d 78%, #c2c6cb 90%, #7c828a 100%);
+  background-blend-mode: overlay, normal;
+}
+.acero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 30% at 72% 22%, rgba(255,255,255,.3), rgba(255,255,255,0) 70%),
+    radial-gradient(30% 22% at 24% 64%, rgba(0,0,0,.09), rgba(0,0,0,0) 70%),
+    radial-gradient(18% 10% at 56% 46%, rgba(0,0,0,.07), rgba(0,0,0,0) 70%);
+  mix-blend-mode: soft-light;
+}
+
+.nevera__puerta {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-radius: 8px;
+  transition: transform var(--t-lenta), box-shadow var(--t-lenta);
+  backface-visibility: hidden;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(0,0,0,.2);
+}
+.nevera__puerta--izq {          /* congelador: la puerta angosta */
+  left: 0;
+  width: 40.3%;
+  transform-origin: left center;
+}
+.nevera__puerta--der {          /* refrigerador: la puerta ancha */
+  right: 0;
+  width: 59.7%;
+  transform-origin: right center;
+}
+body.abriendo .nevera__puerta--izq { transform: rotateY(-72deg); }
+body.abriendo .nevera__puerta--der { transform: rotateY(68deg); }
+body.abriendo-derecha .nevera__puerta--der { transform: rotateY(74deg); }
+body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
+
+/* Manijas verticales largas, pegadas al centro */
+.manija {
+  position: absolute;
+  top: 10%;
+  height: 61%;
+  width: 11px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6d737b 0%, #c9ced3 26%, #f4f6f7 44%, #b0b6bc 62%, #6a7079 100%);
+  box-shadow: 0 3px 9px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.7);
+}
+.manija::before,
+.manija::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  width: 19px; height: 9px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #b7bcc2, #767c84);
+  box-shadow: 0 2px 5px rgba(0,0,0,.3);
+}
+.manija::before { top: -3px; }
+.manija::after  { bottom: -3px; }
+.manija--izq { right: 6%; }
+.manija--der { left: 3%; }
+
+/* Dispensador de agua y hielo (puerta izquierda, como en la foto) */
+.dispensador {
+  position: absolute;
+  top: 30.3%;            /* medido sobre la foto real */
+  left: 20.8%;
+  width: 53.6%;
+  height: 20.7%;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #6d737b 0%, #4a5058 22%, #30353b 100%);
+  box-shadow: inset 0 3px 9px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.4);
+  padding: 7%;
+  display: flex;
+  flex-direction: column;
+  gap: 6%;
+  transition: box-shadow var(--t-rapida);
+}
+.dispensador:hover { box-shadow: inset 0 3px 9px rgba(0,0,0,.6), 0 0 0 3px rgba(216,64,60,.55); }
+.dispensador__pantalla {
+  height: 22%;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #1d2a30, #0c1418);
+  box-shadow: inset 0 0 8px rgba(0,0,0,.9);
+  display: grid;
+  place-items: center;
+  font-family: var(--ui);
+  font-size: clamp(.42rem, 1.1vw, .6rem);
+  letter-spacing: .18em;
+  color: #7fe3c6;
+  text-shadow: 0 0 7px rgba(127, 227, 198, .8);
+}
+.dispensador__hueco {
+  flex: 1;
+  border-radius: 4px;
+  background: radial-gradient(70% 90% at 50% 10%, #11161a 0%, #05080a 100%);
+  box-shadow: inset 0 6px 16px rgba(0,0,0,.95);
+  position: relative;
+}
+.dispensador__hueco::after {
+  content: "";
+  position: absolute;
+  top: 8%; left: 50%;
+  transform: translateX(-50%);
+  width: 14%; height: 16%;
+  border-radius: 0 0 50% 50%;
+  background: linear-gradient(180deg, #8f959c, #555b62);
+}
+
+/* Logo neutro (NO es una marca real, es una placa genérica) */
+.nevera__placa {
+  position: absolute;
+  top: 3.5%;
+  right: 9%;
+  width: 34px; height: 13px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.08));
+  border: 1px solid rgba(255,255,255,.35);
+  opacity: .5;
+}
+
+/* Patas */
+.nevera__patas {
+  position: absolute;
+  left: 4%; right: 4%;
+  bottom: -11px;
+  height: 11px;
+  display: flex;
+  justify-content: space-between;
+}
+.nevera.con-foto .nevera__patas { display: none; }
+.nevera__patas i {
+  width: 22px; height: 11px;
+  background: linear-gradient(180deg, #5d636b, #2c3137);
+  border-radius: 0 0 4px 4px;
+}
+
+/* La foto real del usuario se superpone encima si existe */
+.nevera__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  z-index: 4;
+  transition: opacity var(--t-lenta);
+}
+.nevera__foto[hidden] { display: none; }
+body.abriendo .nevera__foto { opacity: 0; }
+
+/* ================ 07. ESCENA: INTERIOR DE LA NEVERA ==================== */
+
+.escena {
+  position: relative;
+  min-height: 100dvh;
+  padding: calc(var(--hud-alto) + clamp(18px, 4vw, 40px)) clamp(14px, 4vw, 48px) clamp(90px, 12vh, 130px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Fondo: luz fría cayendo desde arriba, como una nevera abierta */
+.escena::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(120% 70% at 50% -12%, #ffffff 0%, #f0fafd 20%, #d2e8f0 48%, #a8c6d2 74%, #6f94a3 100%);
+}
+/* Vignette + "frío" en los bordes */
+.escena::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(130% 110% at 50% 30%, rgba(255,255,255,0) 40%, rgba(22, 60, 78, .34) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 18%);
+}
+
+/* Paredes laterales del cuerpo de la nevera, en perspectiva */
+.escena__pared {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: clamp(40px, 9vw, 130px);
+  z-index: -1;
+  pointer-events: none;
+}
+.escena__pared--izq {
+  left: 0;
+  background: linear-gradient(90deg, rgba(60,104,122,.55) 0%, rgba(173,205,217,.25) 60%, rgba(255,255,255,0) 100%);
+  clip-path: polygon(0 0, 100% 9%, 100% 91%, 0 100%);
+}
+.escena__pared--der {
+  right: 0;
+  background: linear-gradient(270deg, rgba(60,104,122,.55) 0%, rgba(173,205,217,.25) 60%, rgba(255,255,255,0) 100%);
+  clip-path: polygon(100% 0, 0 9%, 0 91%, 100% 100%);
+}
+
+/* Luz LED superior */
+.escena__luz {
+  position: absolute;
+  top: var(--hud-alto); left: 50%;
+  transform: translateX(-50%);
+  width: min(62%, 560px);
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), #ffffff 18%, #ffffff 82%, rgba(255,255,255,0));
+  box-shadow: 0 0 60px 26px rgba(255, 255, 255, .85), 0 0 140px 60px rgba(190, 232, 245, .6);
+  z-index: -1;
+  animation: parpadeo-led 7s ease-in-out infinite;
+}
+@keyframes parpadeo-led {
+  0%, 92%, 100% { opacity: 1; }
+  93%  { opacity: .55; }
+  95%  { opacity: 1; }
+  96.5%{ opacity: .7; }
+}
+
+/* Condensación / escarcha sutil */
+.escena__escarcha {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .5;
+  background-image:
+    radial-gradient(2px 2px at 12% 22%, rgba(255,255,255,.9), transparent 60%),
+    radial-gradient(3px 3px at 78% 14%, rgba(255,255,255,.75), transparent 60%),
+    radial-gradient(2px 2px at 36% 68%, rgba(255,255,255,.7), transparent 60%),
+    radial-gradient(2.5px 2.5px at 88% 72%, rgba(255,255,255,.8), transparent 60%),
+    radial-gradient(2px 2px at 58% 40%, rgba(255,255,255,.6), transparent 60%),
+    radial-gradient(1.5px 1.5px at 24% 86%, rgba(255,255,255,.7), transparent 60%),
+    radial-gradient(2px 2px at 66% 90%, rgba(255,255,255,.55), transparent 60%);
+}
+
+/* Encabezado del espacio */
+.encabezado {
+  max-width: 62ch;
+  margin: 0 auto clamp(20px, 4vw, 42px);
+  text-align: center;
+}
+.encabezado .etiqueta { color: var(--frio-50); }
+.encabezado__titulo { margin: 8px 0 14px; color: var(--frio-60); }
+
+/* --- El "mueble" de estantes del interior general --- */
+.nevera-interior {
+  position: relative;
+  width: min(940px, 100%, calc((100dvh - 330px) * 1.47));
+  margin: 0 auto;
+  border-radius: 18px;
+  border: var(--borde-vidrio);
+  box-shadow: var(--sombra-alta), inset 0 0 90px rgba(255,255,255,.7);
+  overflow: hidden;
+  line-height: 0;
+}
+.interior-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Estantes de vidrio */
+.estante {
+  position: absolute;
+  left: 7%;
+  right: 23%;
+  height: 7px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(176,214,228,.55));
+  box-shadow: 0 10px 26px rgba(22, 62, 80, .22), 0 1px 0 rgba(255,255,255,.95);
+}
+.estante--1 { top: 27%; }
+.estante--2 { top: 48%; }
+.estante--3 { top: 68%; }
+
+/* Compartimentos de la puerta (columna derecha) */
+.puerta-estantes {
+  position: absolute;
+  top: 6%;
+  right: 3.5%;
+  bottom: 6%;
+  width: 17%;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(160,197,211,.35));
+  border: var(--borde-vidrio);
+  display: flex;
+  flex-direction: column;
+  gap: 9%;
+  padding: 8% 6%;
+}
+.puerta-estantes i {
+  flex: 1;
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(190,222,233,.4));
+  box-shadow: inset 0 2px 5px rgba(255,255,255,.9), 0 4px 10px rgba(22,62,80,.14);
+}
+
+/* Cajones inferiores */
+.cajones {
+  position: absolute;
+  left: 7%;
+  right: 23%;
+  bottom: 4%;
+  height: 22%;
+  display: flex;
+  gap: 2.5%;
+}
+.cajon-visual {
+  flex: 1;
+  border-radius: 9px;
+  background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(150,192,208,.45));
+  border: var(--borde-vidrio);
+  box-shadow: inset 0 3px 10px rgba(255,255,255,.8), 0 8px 18px rgba(22,62,80,.18);
+  position: relative;
+}
+.cajon-visual::after {
+  content: "";
+  position: absolute;
+  top: 16%; left: 28%; right: 28%;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.85);
+  box-shadow: 0 1px 3px rgba(22,62,80,.3);
+}
+
+/* ============================ 08. HOTSPOTS ============================= */
+
+.hotspot {
+  position: absolute;
+  z-index: 6;
+  display: block;
+  text-decoration: none;
+  border-radius: 14px;
+  transition: transform var(--t-rapida);
+}
+.hotspot:hover,
+.hotspot:focus-visible { transform: scale(1.04); z-index: 9; }
+
+/* Zona clicable con borde que aparece al pasar el mouse */
+.hotspot__area {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 2px dashed rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0);
+  transition: background var(--t-rapida), border-color var(--t-rapida), box-shadow var(--t-rapida);
+}
+.hotspot:hover .hotspot__area,
+.hotspot:focus-visible .hotspot__area {
+  background: rgba(255, 255, 255, .34);
+  border-color: rgba(255, 255, 255, .95);
+  box-shadow: 0 0 0 4px rgba(173, 38, 43, .18), 0 14px 34px rgba(20, 60, 78, .2);
+}
+
+/* Punto pulsante */
+.hotspot__punto {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--rojo);
+  box-shadow: 0 4px 14px rgba(0,0,0,.28);
+}
+.hotspot__punto::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 2px solid var(--rojo-vivo);
+  animation: pulso 2.1s ease-out infinite;
+}
+@keyframes pulso {
+  0%   { transform: scale(.65); opacity: .9; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+.hotspot:nth-of-type(2) .hotspot__punto::after { animation-delay: .35s; }
+.hotspot:nth-of-type(3) .hotspot__punto::after { animation-delay: .7s; }
+.hotspot:nth-of-type(4) .hotspot__punto::after { animation-delay: 1.05s; }
+.hotspot:nth-of-type(5) .hotspot__punto::after { animation-delay: 1.4s; }
+
+/* Etiqueta del hotspot */
+.hotspot__nombre {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 22px);
+  transform: translate(-50%, 6px);
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(14, 38, 48, .92);
+  color: #f2fbfd;
+  font-size: .78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-rapida), transform var(--t-rapida);
+  box-shadow: var(--sombra-media);
+}
+.hotspot:hover .hotspot__nombre,
+.hotspot:focus-visible .hotspot__nombre { opacity: 1; transform: translate(-50%, 0); }
+
+/* Marca de "ya pasé por aquí" */
+.hotspot[data-visitado="si"] .hotspot__punto {
+  background: var(--rojo);
+  border-color: #fff;
+}
+.hotspot[data-visitado="si"] .hotspot__punto::after { animation: none; opacity: 0; }
+
+/* Posiciones de los hotspots sobre el interior */
+.hs--huevos     { left: 18.0%; top: 21.0%; width: 35.0%; height: 17.0%; }
+.hs--sobras     { left: 21.0%; top: 43.5%; width: 45.0%; height: 15.5%; }
+.hs--frutas     { left: 14.6%; top: 69.7%; width: 30.0%; height: 25.9%; }
+.hs--cajon      { left: 46.2%; top: 69.7%; width: 30.6%; height: 25.9%; }
+.hs--lacteos    { left: 81.4%; top: 10.0%; width: 17.2%; height: 74.0%; }
+.hs--congelador { left: 0;     top: 22.0%; width: 10.8%; height: 56.0%; }
+
+/* Hotspots sobre la nevera cerrada del index */
+.nevera .hotspot { border-radius: 8px; }
+.hs--puerta-der { right: 0; top: 0;   width: 59.7%; height: 100%; z-index: 6; }
+.hs--puerta-izq { left: 0;  top: 53%; width: 40.3%; height: 47%;  z-index: 6; }
+.nevera .hotspot__area { border-radius: 8px; }
+.nevera .hotspot:hover .hotspot__area {
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.8);
+}
+
+/* ===================== 09. TARJETAS DE INGREDIENTE ===================== */
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: clamp(14px, 2.4vw, 24px);
+  width: min(1040px, 100%);
+  margin: 0 auto;
+}
+
+.tarjeta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radio-l);
+  background: linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(236,247,251,.86) 100%);
+  border: var(--borde-vidrio);
+  box-shadow: var(--sombra-baja);
+  overflow: hidden;
+  transition: transform var(--t-rapida), box-shadow var(--t-rapida), border-color var(--t-rapida);
+}
+.tarjeta:hover { transform: translateY(-5px); box-shadow: var(--sombra-media); }
+
+.tarjeta__medio {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background:
+    radial-gradient(80% 70% at 50% 0%, #ffffff 0%, #e2f1f6 60%, #c2dae4 100%);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.tarjeta__foto { width: 100%; height: 100%; object-fit: cover; }
+
+/* Placeholder visible cuando la foto todavía no existe */
+.marcador {
+  position: absolute;
+  inset: 8px;
+  border-radius: var(--radio-m);
+  border: 2px dashed rgba(61, 111, 132, .42);
+  background:
+    repeating-linear-gradient(45deg, rgba(61,111,132,.05) 0 8px, rgba(61,111,132,0) 8px 16px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 10px;
+}
+.marcador svg { width: clamp(52px, 22%, 76px); height: auto; aspect-ratio: 1; color: var(--frio-50); }
+.marcador code {
+  font-size: .62rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--frio-50);
+  background: rgba(255,255,255,.75);
+  padding: 2px 6px;
+  border-radius: 4px;
+  word-break: break-all;
+  line-height: 1.35;
+}
+.marcador b {
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--rojo);
+  font-weight: 700;
+}
+
+.tarjeta__cuerpo {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.tarjeta__nombre {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  line-height: 1.05;
+  margin: 0;
+  color: var(--frio-60);
+}
+.tarjeta__dato {
+  font-size: .84rem;
+  line-height: 1.5;
+  color: var(--tinta-suave);
+  margin: 0;
+  flex: 1;
+}
+
+.tarjeta__tomar {
+  margin-top: 4px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--frio-60);
+  color: #fff;
+  font-size: .84rem;
+  font-weight: 500;
+  transition: background var(--t-rapida), transform var(--t-rapida);
+}
+.tarjeta__tomar:hover { transform: translateY(-1px); background: var(--rojo); }
+.tarjeta__tomar .mas { transition: transform var(--t-rapida); display: inline-block; }
+
+/* Estado: ingrediente ya tomado */
+.tarjeta[data-tomado="si"] {
+  border-color: var(--rojo);
+  box-shadow: 0 0 0 2px rgba(173,38,43,.25), var(--sombra-media);
+}
+.tarjeta[data-tomado="si"] .tarjeta__tomar { background: var(--rojo); }
+.tarjeta[data-tomado="si"] .tarjeta__tomar .mas { transform: rotate(45deg); }
+.tarjeta[data-tomado="si"] .tarjeta__medio::after {
+  content: "EN LA CANASTA";
+  position: absolute;
+  top: 10px; left: 10px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--rojo);
+  color: #fff;
+  font-size: .58rem;
+  letter-spacing: .14em;
+  font-weight: 700;
+  box-shadow: var(--sombra-baja);
+}
+
+/* ======================= 10. NAVEGACIÓN INFERIOR ======================= */
+
+.caminos {
+  width: min(1040px, 100%);
+  margin: clamp(28px, 5vw, 56px) auto 0;
+  padding-top: 26px;
+  border-top: 1px solid rgba(61, 111, 132, .22);
+}
+.caminos__titulo {
+  font-size: .68rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--frio-60);
+  margin: 0 0 14px;
+}
+.caminos__lista {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.enlace-camino {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 17px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(61,111,132,.26);
+  font-size: .86rem;
+  text-decoration: none;
+  color: var(--frio-60);
+  transition: background var(--t-rapida), transform var(--t-rapida), border-color var(--t-rapida);
+}
+.enlace-camino:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  border-color: var(--rojo);
+  color: var(--rojo);
+}
+.enlace-camino svg { width: 20px; height: 20px; }
+.enlace-camino--fuerte {
+  background: var(--frio-60);
+  color: #fff;
+  border-color: transparent;
+}
+.enlace-camino--fuerte:hover { background: var(--rojo); color: #fff; }
+.enlace-camino[aria-current="page"] { opacity: .45; pointer-events: none; }
+
+/* ================= 11. PANTALLA DE LA MESA (DESAYUNO) ================== */
+
+.mesa {
+  position: relative;
+  min-height: 100dvh;
+  padding: calc(var(--hud-alto) + clamp(24px, 5vw, 56px)) clamp(14px, 4vw, 48px) 90px;
+  background:
+    radial-gradient(80% 60% at 50% -10%, rgba(255,250,240,.95), rgba(255,250,240,0) 60%),
+    linear-gradient(170deg, #f6f1ea 0%, #e8ded2 60%, #d9cdbd 100%);
+  color: var(--tinta);
+  overflow: hidden;
+}
+.mesa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(91deg, rgba(120,90,60,.05) 0 2px, rgba(120,90,60,0) 2px 26px);
+}
+.mesa > * { position: relative; z-index: 2; }
+
+.resultado {
+  width: min(880px, 100%);
+  margin: 0 auto;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(140,110,80,.2);
+  border-radius: var(--radio-l);
+  padding: clamp(22px, 4vw, 44px);
+  box-shadow: var(--sombra-media);
+  backdrop-filter: blur(6px);
+}
+.resultado .etiqueta { color: var(--rojo); opacity: 1; }
+.resultado__plato {
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1;
+  margin: 10px 0 14px;
+}
+.resultado__texto { font-size: 1.02rem; line-height: 1.6; color: #4a3f33; max-width: 58ch; }
+
+.pasos {
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pasos li {
+  counter-increment: paso;
+  position: relative;
+  padding-left: 42px;
+  font-size: .95rem;
+  line-height: 1.55;
+  color: #4a3f33;
+}
+.pasos li::before {
+  content: counter(paso);
+  position: absolute;
+  left: 0; top: -1px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--rojo);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: .78rem;
+  font-weight: 700;
+  font-family: var(--ui);
+}
+
+.canasta {
+  width: min(880px, 100%);
+  margin: clamp(26px, 4vw, 44px) auto 0;
+}
+.canasta__titulo { color: #5b4a39; margin: 0 0 16px; }
+.canasta__rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 12px;
+}
+.canasta__item {
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(140,110,80,.22);
+  border-radius: var(--radio-m);
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--sombra-baja);
+}
+.canasta__item svg { width: 40px; height: 40px; color: var(--rojo); }
+.canasta__item span { font-size: .78rem; line-height: 1.3; color: #4a3f33; }
+
+.alternativas {
+  width: min(880px, 100%);
+  margin: clamp(26px, 4vw, 44px) auto 0;
+  padding: 22px;
+  border-radius: var(--radio-m);
+  background: rgba(255,255,255,.6);
+  border: 1px dashed rgba(140,110,80,.4);
+}
+.alternativas h3 { font-family: var(--display); font-size: 1.5rem; margin: 0 0 12px; font-weight: 400; }
+.alternativas ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 9px; }
+.alternativas li { font-size: .92rem; line-height: 1.5; color: #4a3f33; }
+.alternativas a { color: var(--rojo); text-underline-offset: 3px; }
+
+.mesa .caminos { border-top-color: rgba(140,110,80,.28); }
+.mesa .caminos__titulo { color: #7a6450; }
+.mesa .enlace-camino { background: rgba(255,255,255,.8); border-color: rgba(140,110,80,.3); color: #4a3f33; }
+.mesa .enlace-camino--fuerte { background: var(--rojo); color: #fff; border-color: transparent; }
+
+/* ============================ 12. RESPONSIVE =========================== */
+
+@media (max-width: 920px) {
+  .cocina {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    padding-bottom: 40px;
+    min-height: auto;
+  }
+  .nevera-conjunto { width: min(330px, 76vw); }
+  .intro { order: 2; max-width: none; padding: 26px 20px 10px; text-align: left; }
+  .nevera-marco { order: 1; padding: 26px 0 30px; }
+  .hotspot__nombre { font-size: .72rem; }
+}
+
+@media (max-width: 640px) {
+  :root { --hud-alto: 56px; }
+  .hud__ruta { display: none; }
+  .hud__volver span,
+  .hud__boton span.texto-boton { display: none; }
+  .hud__volver, .hud__boton { padding: 8px 11px; }
+  .hotspot__punto { width: 16px; height: 16px; border-width: 2.5px; }
+  .hotspot__nombre { top: calc(50% + 18px); font-size: .68rem; padding: 5px 10px; }
+  .rejilla { grid-template-columns: 1fr; }
+  .avisos { bottom: 14px; }
+}
+
+/* ============== 13. ACCESIBILIDAD / MOVIMIENTO REDUCIDO ================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .velo { display: none; }
+  .aparece { opacity: 1; transform: none; }
+}
+
+/* Si el usuario no tiene JavaScript, igual debe poder recorrer todo */
+.aviso-sin-js {
+  margin: 0 auto clamp(18px, 3vw, 30px);
+  width: min(880px, 100%);
+  padding: 14px 18px;
+  border-radius: var(--radio-m);
+  background: rgba(173, 38, 43, .1);
+  border: 1px solid rgba(173, 38, 43, .35);
+  color: var(--rojo-oscuro);
+  font-size: .86rem;
+  line-height: 1.5;
+}
