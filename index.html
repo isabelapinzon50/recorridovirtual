@@ -8,7 +8,6 @@
 <meta name="author" content="Isabela Pinzón Rodríguez">
 <meta name="theme-color" content="#ad262b">
 
-<!-- Tipografías: una serif editorial para la voz interior y una grotesca para la interfaz -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -22,15 +21,12 @@
 <div class="velo" aria-hidden="true"></div>
 <a class="saltar-al-contenido" href="#contenido">Saltar al contenido</a>
 
-<!-- =====================================================================
-     ESPACIO 1 — FRENTE A LA NEVERA
-     La persona está parada en la cocina. Todavía no ha abierto nada.
-     ===================================================================== -->
+
 <main class="cocina" id="contenido">
 
   <div class="cocina__piso" aria-hidden="true"></div>
 
-  <!-- ---------- Columna de texto: la situación ---------- -->
+
   <section class="intro">
     <p class="etiqueta aparece">Espacio 1 de 8 · Recorrido virtual</p>
 
@@ -64,19 +60,19 @@
     </p>
   </section>
 
-  <!-- ---------- Columna visual: la nevera ---------- -->
+
   <section class="nevera-marco" aria-label="La nevera, vista de frente">
    <div class="nevera-conjunto">
 
-    <!-- El mueble rojo de la cocina, que en la foto va justo encima de la nevera -->
+   
     <div class="mueble-rojo" aria-hidden="true"></div>
 
     <div class="nevera">
 
-      <!-- Lo que se ve cuando las puertas se abren -->
+    
       <div class="nevera__hueco" aria-hidden="true"></div>
 
-      <!-- Puerta izquierda: congelador (más angosta, con dispensador) -->
+      
       <div class="nevera__puerta nevera__puerta--izq acero">
         <button class="dispensador" type="button" aria-label="Probar el dispensador de agua">
           <span class="dispensador__pantalla" aria-hidden="true">ICE · WATER</span>
@@ -85,7 +81,7 @@
         <span class="manija manija--izq" aria-hidden="true"></span>
       </div>
 
-      <!-- Puerta derecha: refrigerador (más ancha) -->
+    
       <div class="nevera__puerta nevera__puerta--der acero" aria-hidden="true">
         <span class="manija manija--der"></span>
         <span class="nevera__placa"></span>
@@ -93,18 +89,13 @@
 
       <div class="nevera__patas" aria-hidden="true"><i></i><i></i></div>
 
-      <!--
-        FOTO REAL DE LA NEVERA.
-        Guarda tu fotografía como  img/nevera-cerrada.jpg
-        Si el archivo no existe, esta imagen se oculta sola y queda
-        visible la nevera dibujada con CSS que está justo arriba.
-      -->
+      
       <img class="nevera__foto"
            src="img/nevera-cerrada.jpg"
            data-opcional="1"
            alt="Nevera de dos puertas en acero inoxidable, cerrada, en la cocina.">
 
-      <!-- Zonas clicables sobre la nevera (hotspots) -->
+  
       <a class="hotspot hs--puerta-der" href="espacios/interior.html"
          data-abrir="derecha" data-destino="interior">
         <span class="hotspot__area"></span>
@@ -125,7 +116,6 @@
 
 </main>
 
-<!-- Navegación de respaldo: siempre visible, funciona incluso sin JavaScript -->
 <nav class="caminos" style="padding: 24px clamp(14px,4vw,48px) 60px; background:#e6e1db; border-top:1px solid rgba(0,0,0,.08); margin:0; width:auto;">
   <p class="caminos__titulo">Todos los espacios del recorrido</p>
   <ul class="caminos__lista">

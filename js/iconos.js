@@ -1,16 +1,4 @@
-/* =========================================================================
-   iconos.js — Dibujos SVG en línea
-   -------------------------------------------------------------------------
-   ¿Por qué están aquí y no como archivos .svg sueltos?
-   1. No generan peticiones extra al servidor (el recorrido carga más rápido).
-   2. Funcionan igual si abres el proyecto con doble clic (file://) o en
-      GitHub Pages.
-   3. Sirven de respaldo visual: si todavía no has puesto una foto real en
-      img/ingredientes/, aparece el dibujo con la ruta exacta del archivo
-      que falta.
 
-   Todos usan currentColor, así que heredan el color del contenedor.
-   ========================================================================= */
 
 window.ICONOS = (function () {
   'use strict';
@@ -22,7 +10,7 @@ window.ICONOS = (function () {
   }
 
   return {
-    /* --- Zona huevos --- */
+
     huevos: svg(
       '<ellipse cx="22" cy="34" rx="12" ry="16"/>' +
       '<ellipse cx="43" cy="39" rx="9.5" ry="12.5"/>' +
@@ -40,7 +28,7 @@ window.ICONOS = (function () {
       '<path d="M44 18c-4-1-7 0-9 2" opacity=".6"/>'
     ),
 
-    /* --- Zona lácteos --- */
+    
     leche: svg(
       '<path d="M22 24h20v30a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4z"/>' +
       '<path d="M22 24l5-12h10l5 12"/>' +
@@ -68,7 +56,7 @@ window.ICONOS = (function () {
       '<circle cx="37" cy="29" r="1.5" opacity=".6"/>'
     ),
 
-    /* --- Zona frutas --- */
+
     banano: svg(
       '<path d="M12 26c0 16 12 26 26 26 10 0 16-5 16-10 0-3-2-5-5-5-6 0-10-3-13-8"/>' +
       '<path d="M12 26c0-4 1-7 3-8" />' +
@@ -96,7 +84,7 @@ window.ICONOS = (function () {
       '<path d="M32 16c0-5 3-8 8-9" />'
     ),
 
-    /* --- Cajón frío --- */
+   
     arepas: svg(
       '<circle cx="32" cy="34" r="19"/>' +
       '<circle cx="32" cy="34" r="13" opacity=".4"/>' +
@@ -120,7 +108,7 @@ window.ICONOS = (function () {
       '<path d="M22 36c3-4 7-6 11-7" opacity=".5"/>'
     ),
 
-    /* --- Congelador --- */
+   
     frutosrojos: svg(
       '<circle cx="24" cy="38" r="10"/>' +
       '<circle cx="41" cy="42" r="8"/>' +
@@ -144,7 +132,7 @@ window.ICONOS = (function () {
       '<path d="M22 16c0-3 3-3 3-6M31 16c0-3 3-3 3-6M40 16c0-3 3-3 3-6" opacity=".6"/>'
     ),
 
-    /* --- Iconos de interfaz --- */
+  
     flecha: svg('<path d="M12 32h38M36 18l14 14-14 14"/>'),
     atras: svg('<path d="M52 32H14M28 18L14 32l14 14"/>'),
     casa: svg('<path d="M10 30L32 12l22 18"/><path d="M16 28v24h32V28"/><path d="M27 52V38h10v14"/>'),

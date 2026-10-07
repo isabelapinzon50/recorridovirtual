@@ -1,28 +1,6 @@
-/* =========================================================================
-   RECORRIDO VIRTUAL — "¿Qué hay en la nevera?"
-   Taller Multimedia 1 · Entrega 3
-   -------------------------------------------------------------------------
-   Hoja de estilos única. Organizada en bloques:
-     00. Variables y reset
-     01. Tipografía y utilidades
-     02. Transición entre páginas
-     03. HUD superior (barra fija)
-     04. Panel de inventario
-     05. Avisos flotantes (toasts)
-     06. Escena: cocina + nevera cerrada (index)
-     07. Escena: interior de la nevera
-     08. Hotspots
-     09. Tarjetas de ingrediente
-     10. Navegación inferior
-     11. Pantalla de la mesa (desayuno)
-     12. Responsive
-     13. Accesibilidad / movimiento reducido
-   ========================================================================= */
-
-/* ========================= 00. VARIABLES Y RESET ======================== */
 
 :root {
-  /* Acero cepillado — tomado de la foto de la nevera */
+
   --acero-00: #f1f3f4;
   --acero-10: #d6d9dd;
   --acero-20: #b3b8be;
@@ -31,12 +9,12 @@
   --acero-50: #474c53;
   --acero-60: #2b2f35;
 
-  /* Rojo del mueble superior de la cocina */
+
   --rojo: #ad262b;
   --rojo-vivo: #d8403c;
   --rojo-oscuro: #7d1a1f;
 
-  /* Luz fría del interior de la nevera */
+  
   --frio-00: #ffffff;
   --frio-10: #eaf5f9;
   --frio-20: #cfe6ef;
@@ -45,7 +23,7 @@
   --frio-50: #3d6f84;
   --frio-60: #1d3d4c;
 
-  /* Cocina */
+ 
   --pared: #ece7e2;
   --pared-sombra: #d6cfc8;
   --piso: #e4e2de;
@@ -113,7 +91,6 @@ button {
   border-radius: 4px;
 }
 
-/* ===================== 01. TIPOGRAFÍA Y UTILIDADES ===================== */
 
 .titulo {
   font-family: var(--display);
@@ -170,7 +147,6 @@ button {
 }
 .saltar-al-contenido:focus { top: 12px; }
 
-/* ===================== 02. TRANSICIÓN ENTRE PÁGINAS ==================== */
 
 .velo {
   position: fixed;
@@ -184,7 +160,6 @@ button {
 body.cargado .velo { opacity: 0; }
 body.saliendo .velo { opacity: 1; pointer-events: all; transition: opacity 320ms ease; }
 
-/* Entrada escalonada de los bloques de contenido */
 .aparece {
   opacity: 0;
   transform: translateY(16px);
@@ -196,7 +171,6 @@ body.cargado .aparece[data-retraso="2"] { transition-delay: 240ms; }
 body.cargado .aparece[data-retraso="3"] { transition-delay: 360ms; }
 body.cargado .aparece[data-retraso="4"] { transition-delay: 480ms; }
 
-/* ====================== 03. HUD SUPERIOR (BARRA FIJA) ================== */
 
 .hud {
   position: fixed;
@@ -281,7 +255,6 @@ body.sin-sonido .hud__sonido .onda { opacity: .18; }
 body.sin-sonido .hud__sonido .tachado { opacity: 1; }
 .hud__sonido .tachado { opacity: 0; transition: opacity var(--t-rapida); }
 
-/* ======================= 04. PANEL DE INVENTARIO ======================= */
 
 .inventario {
   position: fixed;
@@ -351,7 +324,6 @@ body.inventario-abierto .inventario { transform: none; }
   line-height: 1.5;
 }
 
-/* ===================== 05. AVISOS FLOTANTES (TOASTS) =================== */
 
 .avisos {
   position: fixed;
@@ -389,7 +361,6 @@ body.inventario-abierto .inventario { transform: none; }
   to { opacity: 0; transform: translateY(10px) scale(.97); }
 }
 
-/* ============= 06. ESCENA: COCINA + NEVERA CERRADA (index) ============= */
 
 .cocina {
   position: relative;
@@ -405,7 +376,7 @@ body.inventario-abierto .inventario { transform: none; }
   gap: clamp(10px, 3vw, 50px);
 }
 
-/* Mueble rojo superior (está en la foto, justo encima de la nevera) */
+
 .mueble-rojo {
   width: 112%;
   margin-left: 4%;
@@ -424,7 +395,6 @@ body.inventario-abierto .inventario { transform: none; }
   background: linear-gradient(100deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,.14) 54%, rgba(255,255,255,0) 70%);
 }
 
-/* Piso de baldosa claro */
 .cocina__piso {
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -436,7 +406,7 @@ body.inventario-abierto .inventario { transform: none; }
     linear-gradient(180deg, #ded9d3 0%, var(--piso) 100%);
 }
 
-/* --- Texto introductorio --- */
+
 .intro {
   position: relative;
   z-index: 3;
@@ -478,7 +448,7 @@ body.inventario-abierto .inventario { transform: none; }
 }
 .pista a { color: var(--rojo); text-underline-offset: 3px; }
 
-/* --- La nevera dibujada con CSS (réplica de la foto) --- */
+
 .nevera-marco {
   position: relative;
   z-index: 2;
@@ -492,8 +462,7 @@ body.inventario-abierto .inventario { transform: none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* El ancho sale del alto disponible, para que la nevera nunca se corte.
-     0.543 es la proporción exacta de la foto recortada (310 / 571). */
+  
   width: min(420px, 82%, calc((100dvh - 300px) * 0.543));
   transform-style: preserve-3d;
 }
@@ -502,12 +471,12 @@ body.inventario-abierto .inventario { transform: none; }
   position: relative;
   width: 100%;
   margin-top: clamp(6px, 1vh, 14px);
-  aspect-ratio: 310 / 571;   /* proporción exacta del recorte de img/nevera-cerrada.jpg */
+  aspect-ratio: 310 / 571;  
   transform-style: preserve-3d;
   filter: drop-shadow(0 34px 44px rgba(40, 30, 25, .34));
 }
 
-/* Hueco oscuro que se ve cuando las puertas se abren */
+
 .nevera__hueco {
   position: absolute;
   inset: 0;
@@ -520,7 +489,7 @@ body.inventario-abierto .inventario { transform: none; }
 }
 body.abriendo .nevera__hueco { opacity: 1; }
 
-/* Cuerpo / puertas en acero cepillado */
+
 .acero {
   background-image:
     repeating-linear-gradient(90deg, rgba(255,255,255,.085) 0 1px, rgba(0,0,0,.038) 1px 3px),
@@ -549,12 +518,12 @@ body.abriendo .nevera__hueco { opacity: 1; }
   backface-visibility: hidden;
   box-shadow: inset 0 2px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(0,0,0,.2);
 }
-.nevera__puerta--izq {          /* congelador: la puerta angosta */
+.nevera__puerta--izq {          
   left: 0;
   width: 40.3%;
   transform-origin: left center;
 }
-.nevera__puerta--der {          /* refrigerador: la puerta ancha */
+.nevera__puerta--der {          
   right: 0;
   width: 59.7%;
   transform-origin: right center;
@@ -564,7 +533,7 @@ body.abriendo .nevera__puerta--der { transform: rotateY(68deg); }
 body.abriendo-derecha .nevera__puerta--der { transform: rotateY(74deg); }
 body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
 
-/* Manijas verticales largas, pegadas al centro */
+
 .manija {
   position: absolute;
   top: 10%;
@@ -589,10 +558,9 @@ body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
 .manija--izq { right: 6%; }
 .manija--der { left: 3%; }
 
-/* Dispensador de agua y hielo (puerta izquierda, como en la foto) */
 .dispensador {
   position: absolute;
-  top: 30.3%;            /* medido sobre la foto real */
+  top: 30.3%;            
   left: 20.8%;
   width: 53.6%;
   height: 20.7%;
@@ -636,7 +604,6 @@ body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
   background: linear-gradient(180deg, #8f959c, #555b62);
 }
 
-/* Logo neutro (NO es una marca real, es una placa genérica) */
 .nevera__placa {
   position: absolute;
   top: 3.5%;
@@ -648,7 +615,7 @@ body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
   opacity: .5;
 }
 
-/* Patas */
+
 .nevera__patas {
   position: absolute;
   left: 4%; right: 4%;
@@ -664,7 +631,7 @@ body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
   border-radius: 0 0 4px 4px;
 }
 
-/* La foto real del usuario se superpone encima si existe */
+
 .nevera__foto {
   position: absolute;
   inset: 0;
@@ -677,7 +644,7 @@ body.abriendo-izquierda .nevera__puerta--izq { transform: rotateY(-78deg); }
 .nevera__foto[hidden] { display: none; }
 body.abriendo .nevera__foto { opacity: 0; }
 
-/* ================ 07. ESCENA: INTERIOR DE LA NEVERA ==================== */
+
 
 .escena {
   position: relative;
@@ -687,7 +654,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   isolation: isolate;
 }
 
-/* Fondo: luz fría cayendo desde arriba, como una nevera abierta */
 .escena::before {
   content: "";
   position: absolute;
@@ -696,7 +662,7 @@ body.abriendo .nevera__foto { opacity: 0; }
   background:
     radial-gradient(120% 70% at 50% -12%, #ffffff 0%, #f0fafd 20%, #d2e8f0 48%, #a8c6d2 74%, #6f94a3 100%);
 }
-/* Vignette + "frío" en los bordes */
+
 .escena::after {
   content: "";
   position: absolute;
@@ -708,7 +674,6 @@ body.abriendo .nevera__foto { opacity: 0; }
     linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 18%);
 }
 
-/* Paredes laterales del cuerpo de la nevera, en perspectiva */
 .escena__pared {
   position: absolute;
   top: 0; bottom: 0;
@@ -727,7 +692,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   clip-path: polygon(100% 0, 0 9%, 0 91%, 100% 100%);
 }
 
-/* Luz LED superior */
 .escena__luz {
   position: absolute;
   top: var(--hud-alto); left: 50%;
@@ -747,7 +711,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   96.5%{ opacity: .7; }
 }
 
-/* Condensación / escarcha sutil */
 .escena__escarcha {
   position: absolute;
   inset: 0;
@@ -764,7 +727,6 @@ body.abriendo .nevera__foto { opacity: 0; }
     radial-gradient(2px 2px at 66% 90%, rgba(255,255,255,.55), transparent 60%);
 }
 
-/* Encabezado del espacio */
 .encabezado {
   max-width: 62ch;
   margin: 0 auto clamp(20px, 4vw, 42px);
@@ -773,7 +735,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 .encabezado .etiqueta { color: var(--frio-50); }
 .encabezado__titulo { margin: 8px 0 14px; color: var(--frio-60); }
 
-/* --- El "mueble" de estantes del interior general --- */
+
 .nevera-interior {
   position: relative;
   width: min(940px, 100%, calc((100dvh - 330px) * 1.47));
@@ -790,7 +752,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   height: auto;
 }
 
-/* Estantes de vidrio */
 .estante {
   position: absolute;
   left: 7%;
@@ -804,7 +765,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 .estante--2 { top: 48%; }
 .estante--3 { top: 68%; }
 
-/* Compartimentos de la puerta (columna derecha) */
+
 .puerta-estantes {
   position: absolute;
   top: 6%;
@@ -854,7 +815,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   box-shadow: 0 1px 3px rgba(22,62,80,.3);
 }
 
-/* ============================ 08. HOTSPOTS ============================= */
 
 .hotspot {
   position: absolute;
@@ -867,7 +827,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 .hotspot:hover,
 .hotspot:focus-visible { transform: scale(1.04); z-index: 9; }
 
-/* Zona clicable con borde que aparece al pasar el mouse */
+
 .hotspot__area {
   position: absolute;
   inset: 0;
@@ -883,7 +843,7 @@ body.abriendo .nevera__foto { opacity: 0; }
   box-shadow: 0 0 0 4px rgba(173, 38, 43, .18), 0 14px 34px rgba(20, 60, 78, .2);
 }
 
-/* Punto pulsante */
+
 .hotspot__punto {
   position: absolute;
   top: 50%; left: 50%;
@@ -912,7 +872,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 .hotspot:nth-of-type(4) .hotspot__punto::after { animation-delay: 1.05s; }
 .hotspot:nth-of-type(5) .hotspot__punto::after { animation-delay: 1.4s; }
 
-/* Etiqueta del hotspot */
+
 .hotspot__nombre {
   position: absolute;
   left: 50%;
@@ -933,14 +893,14 @@ body.abriendo .nevera__foto { opacity: 0; }
 .hotspot:hover .hotspot__nombre,
 .hotspot:focus-visible .hotspot__nombre { opacity: 1; transform: translate(-50%, 0); }
 
-/* Marca de "ya pasé por aquí" */
+
 .hotspot[data-visitado="si"] .hotspot__punto {
   background: var(--rojo);
   border-color: #fff;
 }
 .hotspot[data-visitado="si"] .hotspot__punto::after { animation: none; opacity: 0; }
 
-/* Posiciones de los hotspots sobre el interior */
+
 .hs--huevos     { left: 18.0%; top: 21.0%; width: 35.0%; height: 17.0%; }
 .hs--sobras     { left: 21.0%; top: 43.5%; width: 45.0%; height: 15.5%; }
 .hs--frutas     { left: 14.6%; top: 69.7%; width: 30.0%; height: 25.9%; }
@@ -948,7 +908,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 .hs--lacteos    { left: 81.4%; top: 10.0%; width: 17.2%; height: 74.0%; }
 .hs--congelador { left: 0;     top: 22.0%; width: 10.8%; height: 56.0%; }
 
-/* Hotspots sobre la nevera cerrada del index */
+
 .nevera .hotspot { border-radius: 8px; }
 .hs--puerta-der { right: 0; top: 0;   width: 59.7%; height: 100%; z-index: 6; }
 .hs--puerta-izq { left: 0;  top: 53%; width: 40.3%; height: 47%;  z-index: 6; }
@@ -958,7 +918,7 @@ body.abriendo .nevera__foto { opacity: 0; }
   border-color: rgba(255,255,255,.8);
 }
 
-/* ===================== 09. TARJETAS DE INGREDIENTE ===================== */
+
 
 .rejilla {
   display: grid;
@@ -992,7 +952,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 }
 .tarjeta__foto { width: 100%; height: 100%; object-fit: cover; }
 
-/* Placeholder visible cuando la foto todavía no existe */
+
 .marcador {
   position: absolute;
   inset: 8px;
@@ -1066,7 +1026,7 @@ body.abriendo .nevera__foto { opacity: 0; }
 .tarjeta__tomar:hover { transform: translateY(-1px); background: var(--rojo); }
 .tarjeta__tomar .mas { transition: transform var(--t-rapida); display: inline-block; }
 
-/* Estado: ingrediente ya tomado */
+
 .tarjeta[data-tomado="si"] {
   border-color: var(--rojo);
   box-shadow: 0 0 0 2px rgba(173,38,43,.25), var(--sombra-media);
@@ -1087,7 +1047,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   box-shadow: var(--sombra-baja);
 }
 
-/* ======================= 10. NAVEGACIÓN INFERIOR ======================= */
 
 .caminos {
   width: min(1040px, 100%);
@@ -1137,7 +1096,6 @@ body.abriendo .nevera__foto { opacity: 0; }
 .enlace-camino--fuerte:hover { background: var(--rojo); color: #fff; }
 .enlace-camino[aria-current="page"] { opacity: .45; pointer-events: none; }
 
-/* ================= 11. PANTALLA DE LA MESA (DESAYUNO) ================== */
 
 .mesa {
   position: relative;
@@ -1252,7 +1210,6 @@ body.abriendo .nevera__foto { opacity: 0; }
 .mesa .enlace-camino { background: rgba(255,255,255,.8); border-color: rgba(140,110,80,.3); color: #4a3f33; }
 .mesa .enlace-camino--fuerte { background: var(--rojo); color: #fff; border-color: transparent; }
 
-/* ============================ 12. RESPONSIVE =========================== */
 
 @media (max-width: 920px) {
   .cocina {
@@ -1279,7 +1236,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   .avisos { bottom: 14px; }
 }
 
-/* ============== 13. ACCESIBILIDAD / MOVIMIENTO REDUCIDO ================ */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1294,7 +1250,6 @@ body.abriendo .nevera__foto { opacity: 0; }
   .aparece { opacity: 1; transform: none; }
 }
 
-/* Si el usuario no tiene JavaScript, igual debe poder recorrer todo */
 .aviso-sin-js {
   margin: 0 auto clamp(18px, 3vw, 30px);
   width: min(880px, 100%);

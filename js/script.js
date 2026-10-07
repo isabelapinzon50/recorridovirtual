@@ -1,24 +1,8 @@
-/* =========================================================================
-   script.js — Lógica del recorrido
-   -------------------------------------------------------------------------
-   Responsabilidades:
-     A. Datos (ingredientes, espacios, recetas)
-     B. Guardado del estado entre páginas (con 3 niveles de respaldo)
-     C. Construcción de la barra superior (HUD) y el panel de canasta
-     D. Ingredientes: tomar / devolver
-     E. Imágenes: placeholder automático si la foto todavía no existe
-     F. Transiciones y sonido
-     G. Pantalla final: cálculo del desayuno
 
-   IMPORTANTE: el recorrido funciona también SIN JavaScript. Todas las
-   páginas están enlazadas con <a href> reales; lo que se pierde sin JS es
-   la canasta y la receta final, no la navegación.
-   ========================================================================= */
 
 (function () {
   'use strict';
 
-  /* ================== A. DATOS ======================================== */
 
   var ESPACIOS = {
     inicio:     { nombre: 'Frente a la nevera', archivo: 'index.html',               raiz: true  },
@@ -57,7 +41,7 @@
     cafe:        { nombre: 'Café en grano',            zona: 'congelador', icono: 'cafe' }
   };
 
-  /* Recetas: 'pide' es obligatorio, 'suma' son extras que mejoran el puntaje */
+ 
   var RECETAS = [
     {
       id: 'paisa',
@@ -184,9 +168,7 @@
     leche:   'un vaso de leche'
   };
 
-  /* ================== B. ESTADO ======================================= */
-  /* Tres niveles de respaldo para que no se pierda la canasta:
-     1) sessionStorage  2) localStorage  3) el hash de la URL           */
+
 
   var CLAVE = 'recorridoNevera.v1';
   var estado = { tomados: [], visitados: [], silencio: false };
@@ -225,7 +207,7 @@
   function guardarEstado() {
     var txt = JSON.stringify(estado);
     if (almacen) { try { almacen.setItem(CLAVE, txt); return; } catch (e) {} }
-    // Respaldo: lo colgamos del hash y lo propagamos a los enlaces internos
+   
     try { history.replaceState(null, '', '#e=' + encodeURIComponent(txt)); } catch (e) {}
     propagarHash(txt);
   }
@@ -250,12 +232,11 @@
     }
   }
 
-  /* ================== UTILIDADES ====================================== */
 
   var cuerpo = document.body;
   var espacioActual = cuerpo.getAttribute('data-espacio') || 'inicio';
   var enRaiz = cuerpo.getAttribute('data-nivel') === 'raiz';
-  var P = enRaiz ? '' : '../';   // prefijo de rutas relativas
+  var P = enRaiz ? '' : '../';  
 
   function ruta(clave) {
     var e = ESPACIOS[clave];
@@ -274,7 +255,6 @@
     return el;
   }
 
-  /* ================== C. HUD Y CANASTA ================================ */
 
   var elContador, elLista, elVacio;
 
@@ -302,7 +282,7 @@
 
     var der = crear('div', 'hud__derecha');
 
-    // Botón de sonido
+   
     var bSon = crear('button', 'hud__boton hud__sonido',
       '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -324,7 +304,7 @@
     });
     der.appendChild(bSon);
 
-    // Botón de canasta
+   
     var bCan = crear('button', 'hud__boton hud__canasta',
       '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -339,7 +319,7 @@
     });
     der.appendChild(bCan);
 
-    // Acceso directo a la mesa
+    
     if (espacioActual !== 'desayuno') {
       var bMesa = crear('a', 'hud__boton',
         icono('plato') +
@@ -418,7 +398,6 @@
     });
   }
 
-  /* ================== D. TOMAR / DEVOLVER ============================= */
 
   function alternar(clave, forzar) {
     var ing = INGREDIENTES[clave];
@@ -470,10 +449,6 @@
     sincronizarTarjetas();
   }
 
-  /* ================== E. IMÁGENES CON PLACEHOLDER ===================== */
-  /* Si la foto no existe todavía, mostramos un marcador que dice
-     exactamente qué archivo falta y dónde ponerlo.                    */
-
   function marcadorDe(img) {
     var nombreIcono = img.getAttribute('data-icono') || 'plato';
     var archivo = img.getAttribute('data-ruta') || img.getAttribute('src') || '';
@@ -503,8 +478,7 @@
       })(imgs[i]);
     }
 
-    // Imágenes opcionales (ej. la foto real de la nevera en el inicio):
-    // si no están, simplemente se ocultan y queda la versión dibujada con CSS.
+  
     var opcionales = document.querySelectorAll('img[data-opcional]');
     for (var j = 0; j < opcionales.length; j++) {
       (function (img) {
@@ -523,8 +497,6 @@
       })(opcionales[j]);
     }
   }
-
-  /* ================== F. TRANSICIONES, AVISOS Y SONIDO ================ */
 
   var contenedorAvisos;
 
@@ -558,7 +530,7 @@
       if (!esEnlaceInterno(a)) return;
       if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
 
-      // La animación de apertura de puertas se maneja aparte
+     
       if (a.getAttribute('data-abrir')) return;
 
       var son = a.getAttribute('data-sonido');
@@ -570,7 +542,7 @@
       setTimeout(function () { location.href = destino; }, 290);
     });
 
-    // Si la persona vuelve con el botón "atrás" del navegador
+   
     window.addEventListener('pageshow', function () { cuerpo.classList.remove('saliendo'); });
   }
 
@@ -583,7 +555,7 @@
           ev.preventDefault();
           if (cuerpo.classList.contains('abriendo')) return;
 
-          var lado = el.getAttribute('data-abrir'); // 'ambas' | 'derecha' | 'izquierda'
+          var lado = el.getAttribute('data-abrir');
           cuerpo.classList.add('abriendo');
           if (lado === 'derecha') cuerpo.classList.add('abriendo-derecha');
           if (lado === 'izquierda') cuerpo.classList.add('abriendo-izquierda');
@@ -630,7 +602,6 @@
     }
   }
 
-  /* ================== G. PANTALLA FINAL =============================== */
 
   function evaluarRecetas() {
     var posibles = [], cercanas = [];
@@ -667,7 +638,7 @@
     var n = estado.tomados.length;
     var r = evaluarRecetas();
 
-    /* --- Bloque del plato --- */
+  
     var caja = crear('div', 'resultado');
 
     if (n === 0) {
@@ -709,7 +680,7 @@
     }
     cont.appendChild(caja);
 
-    /* --- Canasta --- */
+  
     if (n > 0) {
       var sec = crear('section', 'canasta');
       sec.appendChild(crear('h3', 'titulo titulo--m canasta__titulo',
@@ -724,7 +695,6 @@
       cont.appendChild(sec);
     }
 
-    /* --- Alternativas: qué más podrías haber hecho --- */
     var alt = crear('section', 'alternativas');
     var hayAlgo = false;
     var ul = crear('ul');
@@ -764,7 +734,6 @@
     return arr.slice(0, -1).join(', ') + ' y ' + arr[arr.length - 1];
   }
 
-  /* ================== ARRANQUE ======================================== */
 
   function iniciar() {
     leerEstado();
